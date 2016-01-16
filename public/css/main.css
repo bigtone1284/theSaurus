@@ -1,0 +1,130 @@
+body {
+	background-color: #E6E6FA;
+	font-size: 16px;
+}
+
+ul {
+	padding-left: initial;
+}
+
+li {
+	list-style: none;
+}
+
+#content {
+	width: 100%;
+}
+
+.searchGroup {
+	text-align: center;
+}
+
+.searchIcon {
+	background-color: #ffffff;
+	border: solid 1px #A9A9A9;
+	border-left: 0px;
+	border-bottom-right-radius: .125em;
+	border-top-right-radius: .125em;
+	color: #A9A9A9;
+	font-size: 3em;
+	padding: .3em;
+	padding-bottom: .375em;
+	padding-top: .72em;
+	position: relative;
+}
+
+.searchIcon:hover {
+	color: #008080;
+	cursor: pointer;
+}
+
+.searchIcon:active {
+	color: #4B0082;
+}
+
+.searchInput {
+	background-color: #ffffff;
+	border: solid 1px #A9A9A9;
+	border-right: 0px;
+	border-bottom-left-radius: .125em;
+	border-top-left-radius: .125em;
+	font-size: 4em;
+	padding: .25em;
+	width: 8em;
+}
+
+.searchButton:focus,
+.searchInput:focus {
+	outline: none;
+}
+
+.searchInput:focus {
+	border-color:;
+}
+
+.searchIcon {
+	position: relative;
+}
+
+.fa-search {
+	position: relative;
+	bottom: .1em;
+}
+
+.resultsDiv {
+	padding-top: 2em;
+	width: 100%;
+}
+
+.resultDiv {
+	border: 0.125em solid black;
+	border-radius: 0.5em; 
+	color: #fff;
+	display: inline-block;
+	width: 15em;
+	margin: 0.5em;
+	padding: 1em;
+	vertical-align: top;
+}
+
+.resultsTitle {
+	font-size: 2em;
+	text-transform: capitalize;
+}
+
+.adverb {
+	background: #DAA520;
+}
+
+.adjective {
+	background: #DC143C;
+}
+
+.noun {
+	background: #6495ED;
+}
+
+.verb {
+	background: #3CB371;
+}
+
+.word {
+	border: 0.125em solid #000;
+	border-radius: 0.5em;
+	font-size: 1.5em;
+	margin: 0.125em 0.25em;
+	padding: 0.5em 0.75em;
+}
+
+@media (max-width: 800px) {
+	.searchInput {
+		font-size: 2.5em;
+		padding: .2em;
+	}
+	.searchIcon {
+		font-size: 2em;
+		padding: .25em;
+		padding-top: .55em;
+		padding-bottom: .25em;
+	}
+}

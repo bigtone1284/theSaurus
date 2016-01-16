@@ -25,3 +25,15 @@ app.use(express.static(__dirname + "/public"));
 app.listen(app.get('port'), function() {
   console.log('Server started: http://localhost:' + app.get('port') + '/');
 });
+
+app.get('/thesaurus_api', function (req, res, next) {
+	var word = req.query.word;
+	request({
+		uri: 'http://words.bighugelabs.com/api/2/' + process.env.API_KEY + '/' + word + '/json',
+		method: 'GET',
+		json: true
+	}, function (error, response, body) {
+		if (error) res.status(500).send({error: "Internal Server Error"});
+		res.send(body);
+	});
+});
