@@ -66,6 +66,10 @@ li {
 	position: relative;
 }
 
+.searchError {
+	
+}
+
 .fa-search {
 	position: relative;
 	bottom: .1em;
@@ -114,6 +118,10 @@ li {
 	font-size: 1.5em;
 	margin: 0.125em 0.25em;
 	padding: 0.5em 0.75em;
+}
+
+.hidden {
+	display: none;
 }
 
 @media (max-width: 800px) {

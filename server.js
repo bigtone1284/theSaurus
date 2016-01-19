@@ -34,6 +34,7 @@ app.get('/thesaurus_api', function (req, res, next) {
 		json: true
 	}, function (error, response, body) {
 		if (error) res.status(500).send({error: "Internal Server Error"});
+		if (!body) res.status(500).send(word + " was not found.");
 		res.send(body);
 	});
 });

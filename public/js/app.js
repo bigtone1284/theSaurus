@@ -28,6 +28,9 @@ var SearchInputDiv = React.createClass({
 			<div className='searchGroup'>
 				<input ref='searchInput' className='searchInput' placeholder='Search Synonyms' type='text'/>
 				<span ref='searchIcon' className='searchIcon'><i className="fa fa-search"></i></span>
+				<div ref='searchError' className='searchError'>
+					<p></p>
+				</div>
 			</div>
 		); 
 	},
@@ -44,12 +47,20 @@ var SearchInputDiv = React.createClass({
 			this.props.wordLookup(word);
 		}
 	},
+	subscribeToWords: function () {
+		'use strict';
+		this.pubsub_token = PubSub.subscribe('wordLookup', function(topic, word) {
+			this.refs.searchInput.value = word;
+			this.props.wordLookup(word);
+		}.bind(this));
+	},
 	componentDidMount: function () {
 		'use strict';
 		var searchIcon = this.refs.searchIcon,
 			searchInput = this.refs.searchInput;
 		searchIcon.addEventListener('click', this.searchWord);
 		searchInput.addEventListener('keydown', this.enterKeySearch);
+		this.subscribeToWords();
 	}
 });
 
@@ -100,6 +111,7 @@ var ResultsDiv = React.createClass({
 					});
 				}.bind(this),
 				error: function(jqXHR, status, statusMessage) { 
+					debugger
 					console.log(status, statusMessage);
 				}
 			});
@@ -130,14 +142,18 @@ var WordListItem = React.createClass({
 	render: function () {
 		'use strict';
 		return (
-			<li className="word">
+			<li ref="wordButton" className="word">
 				{this.props.word}
 			</li>
 		);
 	},
+	publishWord: function () {
+		'use strict';
+		PubSub.publish('wordLookup', this.props.word)
+	},
 	componentDidMount: function () {
 		'use strict';
-			debugger
+		this.refs.wordButton.addEventListener('click', this.publishWord);
 	}
 });
 
