@@ -1,6 +1,8 @@
 body {
 	background-color: #E6E6FA;
+	font-family: 'Work Sans', sans-serif;
 	font-size: 16px;
+	text-align: center;
 }
 
 ul {
@@ -29,7 +31,7 @@ li {
 	font-size: 3em;
 	padding: .3em;
 	padding-bottom: .375em;
-	padding-top: .72em;
+	padding-top: .69em;
 	position: relative;
 }
 
@@ -48,8 +50,9 @@ li {
 	border-right: 0px;
 	border-bottom-left-radius: .125em;
 	border-top-left-radius: .125em;
+	box-shadow: 1em 0.5em 3em 0.1em rgba(0,0,0,0.3);
+	padding: 0.25em;
 	font-size: 4em;
-	padding: .25em;
 	width: 8em;
 }
 
@@ -59,7 +62,6 @@ li {
 }
 
 .searchInput:focus {
-	border-color:;
 }
 
 .searchIcon {
@@ -67,7 +69,9 @@ li {
 }
 
 .searchError {
-	
+	font-size: 1.5em;
+	font-weight: bold;
+	color: #DC143C;
 }
 
 .fa-search {
@@ -76,48 +80,67 @@ li {
 }
 
 .resultsDiv {
-	padding-top: 2em;
+	display: inline-block;
+	margin: 0 auto;
+	text-align: center;
 	width: 100%;
 }
 
 .resultDiv {
-	border: 0.125em solid black;
-	border-radius: 0.5em; 
+	border: 0.1em solid #C0C0C0;
+	border-radius: 0.5em;
+	box-shadow: 1.25em 0.5em 2.5em 0.1em rgba(0,0,0,0.3);
 	color: #fff;
 	display: inline-block;
-	width: 15em;
 	margin: 0.5em;
-	padding: 1em;
+	overflow-y: scroll;
 	vertical-align: top;
+	width: 90%;
 }
 
 .resultsTitle {
+	padding-top: 0.25em;
 	font-size: 2em;
 	text-transform: capitalize;
 }
 
-.adverb {
+.adverbs {
 	background: #DAA520;
 }
 
-.adjective {
+.adjectives {
 	background: #DC143C;
 }
 
-.noun {
+.nouns {
 	background: #6495ED;
 }
 
-.verb {
+.verbs {
 	background: #3CB371;
 }
 
+.wordList {
+	text-align: left;
+}
+
 .word {
-	border: 0.125em solid #000;
+	border: 0.1em solid #C9C9C9;
 	border-radius: 0.5em;
+	box-shadow: 1em 0.5em 2em 0.1em rgba(0,0,0,0.3);
+	display: inline-block;
 	font-size: 1.5em;
 	margin: 0.125em 0.25em;
 	padding: 0.5em 0.75em;
+	cursor: pointer;
+}
+
+.word:active {
+	border-color: #00FFFF;
+}
+
+.word:hover {
+	background: rgba(0, 0, 0, 0.4)
 }
 
 .hidden {
@@ -132,7 +155,7 @@ li {
 	.searchIcon {
 		font-size: 2em;
 		padding: .25em;
-		padding-top: .55em;
+		padding-top: .525em;
 		padding-bottom: .25em;
 	}
 }

@@ -10,11 +10,12 @@ var Thesaurus = React.createClass({
 	getInitialState: function () {
 		'use strict';
 		return ({
-			word: ''
+			word: '',
 		});
 	},
 	wordLookup: function(word) {
 		'use strict';
+		window.location.hash = '/' + word.split(' ').join('+');
 		this.setState({
 			word: word
 		});
@@ -28,9 +29,7 @@ var SearchInputDiv = React.createClass({
 			<div className='searchGroup'>
 				<input ref='searchInput' className='searchInput' placeholder='Search Synonyms' type='text'/>
 				<span ref='searchIcon' className='searchIcon'><i className="fa fa-search"></i></span>
-				<div ref='searchError' className='searchError'>
-					<p></p>
-				</div>
+				<SearchError />
 			</div>
 		); 
 	},
@@ -54,14 +53,31 @@ var SearchInputDiv = React.createClass({
 			this.props.wordLookup(word);
 		}.bind(this));
 	},
+	getWordFromPath: function () {
+		'use strict';
+		var path = window.location.hash,
+			word;
+		if (path) {
+			word = path.split('/')[1].split('+').join(' ');
+			this.refs.searchInput.value = word;
+		}
+		this.searchWord();
+	},
 	componentDidMount: function () {
 		'use strict';
 		var searchIcon = this.refs.searchIcon,
 			searchInput = this.refs.searchInput;
 		searchIcon.addEventListener('click', this.searchWord);
 		searchInput.addEventListener('keydown', this.enterKeySearch);
+		window.addEventListener('hashchange', this.getWordFromPath);
+		this.getWordFromPath();
 		this.subscribeToWords();
-	}
+	},
+	componentWillUnmount: function() {
+		'use strict';
+    Pubsub.unsubscribe(this.pubsub_token);
+    this.refs.searchInput.removeEventListener('load', this.getWordFromPath);
+  }
 });
 
 var ResultsDiv = React.createClass({
@@ -73,7 +89,7 @@ var ResultsDiv = React.createClass({
 		resultNodes = entryKeys.map(function (partOfSpeech) {
 				if (entryObj[partOfSpeech].syn) {
 					return (
-						<ResultDiv results={entryObj[partOfSpeech].syn} partOfSpeech={partOfSpeech} />
+						<ResultDiv results={entryObj[partOfSpeech].syn} partOfSpeech={partOfSpeech + "s"} />
 					);
 				}
 			});
@@ -109,13 +125,50 @@ var ResultsDiv = React.createClass({
 						word: word,
 						entry: data
 					});
+					PubSub.publish('searchErrorMessage');
 				}.bind(this),
-				error: function(jqXHR, status, statusMessage) { 
-					debugger
-					console.log(status, statusMessage);
-				}
+				error: function(jqXHR, status, statusMessage) {
+					this.setState({
+						word: word,
+						entry: ''
+					});
+					PubSub.publish('searchErrorMessage', jqXHR.responseText);
+				}.bind(this)
 			});
 		}
+	}
+});
+
+var SearchError = React.createClass({
+	render: function () {
+		'use strict';
+		return (
+			<div ref='searchError' className='searchError'>
+				<p>{this.state.searchError}</p>
+			</div>
+		);
+	},
+	getInitialState: function () {
+		'use strict';
+		return {
+			searchError: ''
+		};
+	},
+	componentDidMount: function () {
+		'use strict';
+		this.subscribeToError();
+	},
+	componentWillUnmount: function() {
+		'use strict';
+    PubSub.unsubscribe(this.pubsub_token);
+  },
+	subscribeToError: function () {
+		'use strict';
+		this.pubsub_token = PubSub.subscribe('searchErrorMessage', function(topic, searchErrorMessage) {
+			this.setState({
+				searchError: searchErrorMessage
+			});
+		}.bind(this));
 	}
 });
 
@@ -129,7 +182,7 @@ var ResultDiv = React.createClass({
 		});
 		return (
 			<div className={this.props.partOfSpeech + " resultDiv"}>
-				<span className="resultsTitle">{this.props.partOfSpeech}</span>
+				<div className="resultsTitle">{this.props.partOfSpeech}</div>
 				<ul className="wordList">
 					{wordNodes}
 				</ul>
