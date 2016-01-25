@@ -61,9 +61,6 @@ li {
 	outline: none;
 }
 
-.searchInput:focus {
-}
-
 .searchIcon {
 	position: relative;
 }
