@@ -17,6 +17,11 @@ li {
 	width: 100%;
 }
 
+.thesaurusTitle {
+	font-size: 3em;
+	color: #262922;
+}
+
 .searchGroup {
 	text-align: center;
 }

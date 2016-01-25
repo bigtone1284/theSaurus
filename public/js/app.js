@@ -2,6 +2,7 @@ var Thesaurus = React.createClass({
 	render: function () {
 		return (
 			<div>
+				<h1 className='thesaurusTitle'>Thesaurus</h1>
 				<SearchInputDiv wordLookup={this.wordLookup}/>
 				<ResultsDiv word={this.state.word}/>
 			</div>
